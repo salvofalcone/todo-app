@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap");
+
+@import url("./utils/colors.css");
+@import url("./utils/switch.css");
+
+* {
+  font-family: "Titillium Web", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li {
+  background-color: var(--blue);
+  color: var(--white);
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 80%;
+  height: 30px;
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+
+  padding: 8px;
+  margin: 4px;
+}
+
+.toDoInput {
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  margin-top: 20px;
+  border: 4px solid rgba(0, 0, 0, 0.016);
+  border-radius: 12px;
+
+  width: 600px;
+  height: 80px;
+  font-size: 24px;
+  text-align: center;
+
+  position: sticky;
+  top: 20px;
+}
+
+.toDoMain {
+  width: 600px;
+  min-height: 100px;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  padding: 12px 0;
+  margin-top: 36px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 4px solid rgba(0, 0, 0, 0.016);
+  border-radius: 12px;
+}
+
+/* tasti */
+.removeBtn {
+  border-radius: 50%;
+  color: var(--blue);
+  width: 30px;
+  height: 30px;
+  border: none;
+}
+.removeBtn:hover {
+  background-color: #c1121f;
+  cursor: pointer;
+  transition: all 0.4s;
+  transform: scale(1.1);
+}
+
+.addBtn {
+  background-color: var(--green);
+  border-radius: 8px;
+  color: var(--white);
+  box-shadow: var(--shadow);
+  border: none;
+  margin-top: 8px;
+
+  width: 160px;
+  height: 40px;
+  font-size: 16px;
+  text-transform: uppercase;
+
+  position: sticky;
+  top: 120px;
+}
+
+.addBtn:hover {
+  cursor: pointer;
+  transition: all 0.4s;
+  transform: scale(1.04);
+}
+
+@media screen and (max-width: 767px) {
+  .toDoInput {
+    width: 90vw;
+    height: 80px;
+    position: sticky;
+    top: 6px;
+  }
+  .addBtn {
+    position: sticky;
+    top: 100px;
+  }
+  .toDoMain {
+    width: 90vw;
+  }
+
+  .switch {
+    margin-right: 10px;
+  }
+
+  li {
+    height: auto;
+  }
+
+  .removeBtn {
+    min-width: 30px;
+    margin: 2px;
+  }
+}
+
+/* night mode */
+.dark__body {
+  background-color: var(--blue);
+  background-color: #232323;
+  color: var(--white);
+}
+
+.dark__toDoBtn {
+  background-color: #ffb2d1;
+  color: #000;
+  box-shadow: var(--shadow-white);
+}
+
+.dark__toDoInput {
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  color: var(--white);
+}
+
+.dark__toDoMain {
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
