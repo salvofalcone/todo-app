@@ -23,12 +23,12 @@ function listItemGen(toDoData) {
   toDoMain.append(toDo);
 }
 
-GET().then((data) => {
-  data.todos.forEach((elem) => {
-    todos.push(elem.todo);
-    listItemGen(elem.todo);
-  });
-});
+// GET().then((data) => {
+//   data.todos.forEach((elem) => {
+//     todos.push(elem.todo);
+//     listItemGen(elem.todo);
+//   });
+// });
 
 /***************** STRUTTURA *****************/
 const toDoMain = createEl("ul", "", { name: "class", value: "toDoMain" });
