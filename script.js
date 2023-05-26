@@ -1,36 +1,61 @@
-import { qS, createEl, POST, DELETE, GET } from "./utils/fn.js";
+import { qS, createEl } from "./utils/fn.js";
 
-/***************** FUNZIONI *****************/
-function listItemGen(toDoData) {
-  const toDo = createEl("li", "", { name: "class", value: "toDO" });
-  const removeBtn = createEl("button", "X", {
-    name: "class",
-    value: "removeBtn",
+/************************* FUNZIONI *************************/
+function listItemGen() {
+  toDoMain.textContent = "";
+
+  todos.forEach((singleTodo) => {
+    const toDo = createEl("li", "", { name: "class", value: "toDO" });
+    const removeBtn = createEl("button", "X", {
+      name: "class",
+      value: "removeBtn",
+    });
+
+    const todoText = singleTodo.todo;
+
+    removeBtn.addEventListener("click", () => {
+      todos = todos.filter((todo) => todo.id !== singleTodo.id);
+      listItemGen();
+      localStorage.setItem("todos", JSON.stringify(todos));
+    });
+
+    toDo.textContent = todoText;
+
+    toDo.append(removeBtn);
+    toDoMain.append(toDo);
   });
-
-  const todoText = toDoData;
-
-  removeBtn.addEventListener("click", () => {
-    let index = todos.indexOf(toDoData);
-    DELETE(index); //per eliminare dal server
-    todos.splice(index, 1);
-    toDoMain.removeChild(toDo);
-  });
-
-  toDo.textContent = todoText;
-
-  toDo.append(removeBtn);
-  toDoMain.append(toDo);
 }
 
-// GET().then((data) => {
-//   data.todos.forEach((elem) => {
-//     todos.push(elem.todo);
-//     listItemGen(elem.todo);
-//   });
-// });
+const addToDo = () => {
+  const inputValue = toDoInput.value;
 
-/***************** STRUTTURA *****************/
+  if (inputValue !== "") {
+    todos.push({ id: Date.now(), todo: inputValue });
+    listItemGen();
+    toDoInput.value = "";
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
+};
+
+const startApp = () => {
+  todos.forEach((element) => {
+    listItemGen(element.todo);
+  });
+};
+
+// const removeAll = () => {
+//   localStorage.clear();
+//   toDoMain.textContent = "";
+// };
+
+const switchModeClass = () => {
+  document.body.classList.toggle("dark__body");
+  addBtn.classList.toggle("dark__toDoBtn");
+  toDoMain.classList.toggle("dark__toDoMain");
+  toDoInput.classList.toggle("dark__toDoInput");
+};
+
+/************************* Creazione struttura *************************/
 const toDoMain = createEl("ul", "", { name: "class", value: "toDoMain" });
 
 const title = createEl("h1", "To-Do List", {
@@ -51,29 +76,18 @@ const addBtn = createEl("button", "Add", {
 });
 
 const switchMode = qS(".input");
+// const clearAll = qS(".clearAll");
 
-export const todos = [];
+export let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-/***************** EVENT LISTENER *****************/
-switchMode.addEventListener("change", () => {
-  document.body.classList.toggle("dark__body");
-  addBtn.classList.toggle("dark__toDoBtn");
-  toDoMain.classList.toggle("dark__toDoMain");
-  toDoInput.classList.toggle("dark__toDoInput");
-});
+startApp();
 
-addBtn.addEventListener("click", () => {
-  const inputValue = toDoInput.value;
+/************************* EVENT LISTENER *************************/
+switchMode.addEventListener("change", () => switchModeClass());
 
-  if (inputValue !== "") {
-    listItemGen(inputValue);
-    todos.push(inputValue);
-    POST(inputValue); //per aggiungere al server
-    toDoInput.value = "";
-  }
-});
+addBtn.addEventListener("click", () => addToDo());
 
-//AGGIUNGERE GET
+// clearAll.addEventListener("click", () => removeAll());
 
-/***************** APPEND *****************/
+/************************* APPEND *************************/
 document.body.append(title, toDoInput, addBtn, toDoMain);
